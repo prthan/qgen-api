@@ -1,0 +1,57 @@
+{
+  "name": "QGen API",
+  "id": "qgen-api",
+  "mode": "development",
+  "context": "/qgen/api",
+  
+  "logger":
+  {
+    "level": "debug",
+
+    "outputs"  :
+    {
+      "console":
+      {
+        "mode": "rich",
+        "format.plain": "[qgen-api] [local-dev] [#{ts}] #{level} [#{cid}]#{data} #{msg}",
+        "format.rich": "[qgen-api] [local-dev] [#{ts}] #{level} \u001b[35m[#{cid}]\u001b[0m#{data} #{msg}",
+        "ts-format": "%Y/%m/%d %I:%M:%S.%f %p"
+      }
+    }   
+  },
+
+  "listener":
+  {
+    "address": "0.0.0.0",
+    "port": "7171"
+  },
+
+  "auth":
+  {
+    "enabled": "true",
+    "type": "jwt",
+    "public-key": "",
+    "signing-algo": "RS256",
+    "issuer": ""
+  },
+
+  "model" :
+  {
+    "list": ["doc2query"],
+
+    "doc2query":
+    {
+      "mode": "doc2query:generator",
+      "path" : "doc2query-t5-base-msmarco",
+      "device": {"type": "cuda", "index": 0},
+      "params":
+      {
+        "top_k": 10,
+        "max_length": 512,
+        "num_return_sequences": 10
+      },
+      "top_n": 10,
+      "similarity_threshold": 75
+    }
+  }
+}
